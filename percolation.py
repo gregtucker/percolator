@@ -204,6 +204,9 @@ def main():
     except:
         n = 4
         
+    import doctest
+    doctest.testmod()
+        
     p = Percolator(n)
     print(p.cell_state)
 
