@@ -104,23 +104,33 @@ class Percolator(object):
             if col < self.n:  # right
                 if self.is_open(row, col + 1):
                     nbr = self._row_col_to_id(row, col + 1)
-                    self.wqu.union(cell, nbr)
-                    self.wqu_connected.union(cell, nbr)
-            if row == 1:  # top row: attach to extra top cell
-                self.wqu.union(self.extra_top_cell, cell)
-                self.wqu_connected.union(self.extra_top_cell, cell)
-            else: # above
+                    if not self.wqu.connected(cell, nbr):
+                        self.wqu.union(cell, nbr)
+                        self.wqu_connected.union(cell, nbr)
+            if row > 1: # above
                 if self.is_open(row - 1, col):
                     nbr = self._row_col_to_id(row - 1, col)
-                    self.wqu.union(cell, nbr)
-                    self.wqu_connected.union(cell, nbr)
-            if row == self.n:  # bottom row: attach to extra bottom cell
-                self.wqu_connected.union(self.extra_bottom_cell, cell)
-            else:  # below
+                    if not self.wqu.connected(cell, nbr):
+                        self.wqu.union(cell, nbr)
+                        self.wqu_connected.union(cell, nbr)
+            if row < self.n:  # below
                 if self.is_open(row + 1, col):
                     nbr = self._row_col_to_id(row + 1, col)
-                    self.wqu.union(cell, nbr)
-                    self.wqu_connected.union(cell, nbr)
+                    if not self.wqu.connected(cell, nbr):
+                        self.wqu.union(cell, nbr)
+                        self.wqu_connected.union(cell, nbr)
+
+            print('\n')
+            print(self.wqu_connected.sz)
+            if row == 1:  # top row: attach to extra top cell
+                if not self.wqu.connected(self.extra_top_cell, cell):
+                    self.wqu.union(self.extra_top_cell, cell)
+                    print(self.wqu_connected.connected(self.extra_top_cell, cell))
+                    self.wqu_connected.union(self.extra_top_cell, cell)
+            if row == self.n:  # bottom row: attach to extra bottom cell
+                if not self.wqu_connected.connected(self.extra_bottom_cell, cell):
+                    self.wqu_connected.union(self.extra_bottom_cell, cell)
+            print(self.wqu_connected.sz)
 
     def is_open(self, row, col):
         """Return True if cell (row, col) is open, False otherwise."""
