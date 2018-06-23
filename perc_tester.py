@@ -103,6 +103,31 @@ class PercTester(object):
                       + str(100.0 * float(i)/(self.n * self.n)) + '%).')
                 print('\n')
 
+    def run_to_percolation(self):
+        """Run the perc tester once through, opening cells one at a time at
+        random locations until percolation occurs.
+        
+        Returns
+        -------
+        float : proportion of cells open at percolation.
+        
+        Examples
+        --------
+        >>> pt = PercTester(8)
+        >>> round(100 * pt.run_to_percolation())
+        73.0
+        """
+        num_open = 0.0
+
+        while not self.p.percolates():
+            
+            (r, c) = self._pick_random_closed_cell()
+            self.p.open(r, c)
+            self.num_closed_cells -= 1
+            num_open += 1
+
+        return num_open / (self.n * self.n)
+
     def map_full_cells(self):
         """Identify full cells in self.cell array and assign a code of 2."""
         for r in range(self.n):
@@ -120,13 +145,13 @@ class PercTester(object):
         plt.clf()
         plt.imshow(self.cell, vmin=0, vmax=2)
         plt.show()
-
+        
 
 if __name__ == '__main__':
     
     import doctest
     doctest.testmod()
-    
+
     try:
         n = sys.argv[1]
     except:
@@ -134,4 +159,7 @@ if __name__ == '__main__':
         
     pt = PercTester(n, plot_interval=1)
     pt.run()
+    perc_thresh = pt.run_to_percolation()
+    print('Percolation threshold = ' + str(perc_thresh))
+
         
