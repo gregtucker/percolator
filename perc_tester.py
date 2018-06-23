@@ -145,7 +145,13 @@ class PercTester(object):
         plt.clf()
         plt.imshow(self.cell, vmin=0, vmax=2)
         plt.show()
-        
+    
+    def reset(self, seed=0):
+        """Reset PercTester and Percolator for a new run."""
+        self.closed_cells = np.arange(n*n)
+        self.num_closed_cells = n * n
+        np.random.seed(seed)
+        self.p.reset()
 
 if __name__ == '__main__':
     
