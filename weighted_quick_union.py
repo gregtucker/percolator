@@ -71,7 +71,7 @@ class WeightedQuickUnion(object):
     def connected(self, p, q):
         """Return True if p and q are in the same group; False otherwise."""
         return self.root(p) == self.root(q)
-    
+
     def union(self, p, q):
         """Join p and q."""
         if p == q:
