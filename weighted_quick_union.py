@@ -81,3 +81,10 @@ class WeightedQuickUnion(object):
         else:
             self.id[j] = i
             self.sz[i] += self.sz[j]
+
+    def reset(self):
+        """Reset id and sz arrays."""
+        self.id[:] = np.arange(self.id.size, dtype=int)
+        self.sz[:] = 1
+
+
