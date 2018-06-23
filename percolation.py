@@ -192,9 +192,11 @@ class Percolator(object):
         return self.wqu_connected.connected(self.extra_bottom_cell,
                                             self.extra_top_cell)
 
-    
-def test_perc():
-    pass
+    def reset(self):
+        """Reset data structures for a new run."""
+        self.cell_state[:] = False
+        self.wqu.reset()
+        self.wqu_connected.reset()
 
 
 def main():
