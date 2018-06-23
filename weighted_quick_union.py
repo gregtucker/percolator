@@ -51,6 +51,9 @@ class WeightedQuickUnion(object):
     array([6, 2, 6, 4, 6, 6, 6, 6, 4, 4])
     >>> wqu.connected(4, 5)
     True
+    >>> wqu.reset()
+    >>> wqu.id
+    array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
     """
 
     def __init__(self, n):
@@ -86,5 +89,3 @@ class WeightedQuickUnion(object):
         """Reset id and sz arrays."""
         self.id[:] = np.arange(self.id.size, dtype=int)
         self.sz[:] = 1
-
-
