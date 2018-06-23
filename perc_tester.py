@@ -75,7 +75,7 @@ class PercTester(object):
         row = (cell_id // self.n) + 1
         col = (cell_id % self.n) + 1
         return row, col
-    
+
     def run(self):
         """Run the perc tester once through, opening cells one at a time at
         random locations until lattice is fully open."""
@@ -86,7 +86,6 @@ class PercTester(object):
             next_plot = self.plot_interval
         else:
             next_plot = self.n * self.n
-            
         for i in range(self.n * self.n):
             
             (r, c) = self._pick_random_closed_cell()
