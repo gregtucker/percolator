@@ -120,17 +120,13 @@ class Percolator(object):
                         self.wqu.union(cell, nbr)
                         self.wqu_connected.union(cell, nbr)
 
-            print('\n')
-            print(self.wqu_connected.sz)
             if row == 1:  # top row: attach to extra top cell
                 if not self.wqu.connected(self.extra_top_cell, cell):
                     self.wqu.union(self.extra_top_cell, cell)
-                    print(self.wqu_connected.connected(self.extra_top_cell, cell))
                     self.wqu_connected.union(self.extra_top_cell, cell)
             if row == self.n:  # bottom row: attach to extra bottom cell
                 if not self.wqu_connected.connected(self.extra_bottom_cell, cell):
                     self.wqu_connected.union(self.extra_bottom_cell, cell)
-            print(self.wqu_connected.sz)
 
     def is_open(self, row, col):
         """Return True if cell (row, col) is open, False otherwise."""

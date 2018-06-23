@@ -54,6 +54,11 @@ class PercTester(object):
         # swap the id at r with the id at num_closed_cells
         self.closed_cells[r] = self.closed_cells[self.num_closed_cells - 1]
         self.closed_cells[self.num_closed_cells - 1] = cell_id
+        
+        # for debug
+        r, c = self._cell_id_to_row_col(cell_id)
+        if self.p.is_open(r, c):
+            print('uh oh, cell is already open')
 
         return self._cell_id_to_row_col(cell_id)
     
@@ -148,10 +153,11 @@ class PercTester(object):
     
     def reset(self, seed=0):
         """Reset PercTester and Percolator for a new run."""
-        self.closed_cells = np.arange(n*n)
-        self.num_closed_cells = n * n
+        self.closed_cells[:] = np.arange(self.n * self.n)
+        self.num_closed_cells = self.n * self.n
         np.random.seed(seed)
         self.p.reset()
+
 
 if __name__ == '__main__':
     
@@ -165,6 +171,7 @@ if __name__ == '__main__':
         
     pt = PercTester(n, plot_interval=1)
     pt.run()
+    pt.reset()
     perc_thresh = pt.run_to_percolation()
     print('Percolation threshold = ' + str(perc_thresh))
 
